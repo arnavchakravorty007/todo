@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+<head>
+	<title>Todo list</title>
+	<script src="angular.min.js"></script>
+	<script type="text/javascript">
+		angular.module("demo",[])
+		.controller("mycontroller",mycontroller)
+
+		function mycontroller($http){
+			var my = this;
+			var url = '/user?user='+my.value
+			my.click = function(){
+               $http.get(url).then(function(result){
+                 console.log(result);
+               })
+			}
+			my.delete = function(i){
+		       my.array.splice(i,1);
+			}
+		}	
+	</script>
+</head>
+<body ng-controller="mycontroller as my">
+    <input type="text" ng-model="my.value">
+    <input type="Submit" ng-click="my.click()">
+    <div ng-repeat="item in my.array">
+    	<h3 style="display: inline;">{{$index+1}} {{item}}</h3>
+    	<button ng-click="my.delete($index)">Delete</button>
+    </div>
+</body>
+</html>
